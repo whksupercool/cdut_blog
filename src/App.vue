@@ -4,7 +4,7 @@
     <router-view />
     <h1>CDUT Blog</h1>
     <div>
-      <i class="dutBlog cdutBlog-shipin"></i>
+      <i class="iconfont icon-lishi1"></i>
     </div>
     <van-button type="primary">主要按钮</van-button>
     <van-button type="info">信息按钮</van-button>
