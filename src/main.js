@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 // 加载 Vant 核心组件库
-import { Button } from 'vant';
+import { Button, NavBar, Form, Field, Toast, CountDown, Tabbar, TabbarItem, Icon, Image as VanImage } from 'vant';
 
 // 加载全局样式
 import './styles/index.less'
@@ -12,7 +12,18 @@ import 'amfe-flexible'
 
 
 // 注册使用 Vant 组件库
-Vue.use(Button);
+Vue.use(Button)
+Vue.use(NavBar)
+Vue.use(Form)
+Vue.use(Field)
+Vue.use(Toast)
+Vue.use(CountDown)
+Vue.use(Tabbar)
+Vue.use(TabbarItem)
+Vue.use(Icon)
+Vue.use(VanImage)
+
+
 Vue.config.productionTip = false
 
 new Vue({
