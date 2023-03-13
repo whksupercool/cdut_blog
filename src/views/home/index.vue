@@ -3,6 +3,7 @@
 </template>
 
 <script>
+
 export default {
     name: 'HomePage',
     components: {},
@@ -10,7 +11,9 @@ export default {
     data() {
         return {}
     },
-    computed: {},
+    computed: {
+
+    },
     watch: {},
     created() { },
     mounted() { },
