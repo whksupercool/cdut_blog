@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 // 加载 Vant 核心组件库
-import { Button, NavBar, Form, Field, Toast, CountDown, Tabbar, TabbarItem, Icon, Image as VanImage } from 'vant';
+import { Button, NavBar, Form, Field, Toast, CountDown, Tabbar, TabbarItem, Icon, Image as VanImage, Grid, GridItem, Cell, CellGroup, Dialog } from 'vant';
 
 // 加载全局样式
 import './styles/index.less'
@@ -22,6 +22,11 @@ Vue.use(Tabbar)
 Vue.use(TabbarItem)
 Vue.use(Icon)
 Vue.use(VanImage)
+Vue.use(Grid)
+Vue.use(GridItem)
+Vue.use(Cell)
+Vue.use(CellGroup)
+Vue.use(Dialog)
 
 
 Vue.config.productionTip = false
