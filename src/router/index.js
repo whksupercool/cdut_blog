@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+// 路由表
 const routes = [
   {
     path: '/login',
@@ -15,7 +16,7 @@ const routes = [
     component: () => import('@/views/layout'),
     children: [
       {
-        path: '',
+        path: '', // 默认子路由，只能有1个
         name: 'home',
         component: () => import('@/views/home')
       },
@@ -36,6 +37,11 @@ const routes = [
       }
     ]
   },
+  // {
+  //   path: '/search',
+  //   name: 'search',
+  //   component: () => import('@/views/search')
+  // }
 ]
 
 const router = new VueRouter({

@@ -116,7 +116,7 @@ export default {
                 this.userInfo = data.data
                 // console.log(this.userInfo)
             } catch (error) {
-                this.$toast.fail('获取数据失败，请稍后重试！')
+                this.$toast.fail('获取数据失败，请重新登录或稍后重试！')
             }
         },
     }
