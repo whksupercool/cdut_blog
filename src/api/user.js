@@ -41,3 +41,15 @@ export const getUserInfo = () => {
         // }
     })
 }
+
+/**
+ * 获取用户频道列表
+ */
+export const getUserChannels = () => {
+    return request({
+        method: 'GET',
+        url: '/v1_0/user/channels'
+    })
+}
+
+// https://toutiao.itheima.net/v1_0/articles?channel_id=${cataId}&timestamp=${Date.now()}&with_top=1
