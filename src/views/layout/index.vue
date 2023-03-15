@@ -5,7 +5,7 @@
         <!-- /子路由出口 -->
 
         <!-- 标签导航栏 -->
-        <van-tabbar v-model="active" class="layout-tabbar" router>
+        <van-tabbar v-model="active" @change="onChange" class="layout-tabbar" router>
             <van-tabbar-item to="/">
                 <i slot="icon" class="iconfont icon-shouye"></i>
                 <span class="text">首页</span>
@@ -39,7 +39,18 @@ export default {
     },
     computed: {
         ...mapState(['user'])
-    }
+    },
+    // 刷新页面的时候自动执行获取存储在localStorage的值
+    created() {
+        this.active = JSON.parse(localStorage.getItem('TOUTIAO_ACTIVE'));
+    },
+    methods: {
+        onChange(e) {
+            // console.log(e)
+            // 将当前active的值存在本地
+            localStorage.setItem('TOUTIAO_ACTIVE', e)
+        }
+    },
 
 }
 </script>
