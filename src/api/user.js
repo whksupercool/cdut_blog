@@ -52,4 +52,26 @@ export const getUserChannels = () => {
     })
 }
 
-// https://toutiao.itheima.net/v1_0/articles?channel_id=${cataId}&timestamp=${Date.now()}&with_top=1
+
+/**
+ * 添加关注
+ */
+export const addFollow = userId => {
+    return request({
+        method: 'POST',
+        url: '/v1_0/user/followings',
+        data: {
+            target: userId
+        }
+    })
+}
+
+/**
+ * 取消关注
+ */
+export const deleteFollow = userId => {
+    return request({
+        method: 'DELETE',
+        url: `/v1_0/user/followings/${userId}`
+    })
+}
