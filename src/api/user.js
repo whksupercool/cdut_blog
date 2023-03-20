@@ -32,7 +32,7 @@ export const sendSms = mobile => {
 export const getUserInfo = () => {
     return request({
         method: 'GET',
-        url: '/v1_0/user/profile',
+        url: '/v1_0/user',
         // 发送请求头数据
         // headers: {
         //     // 注意：该接口需要授权才能访问

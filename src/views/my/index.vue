@@ -92,7 +92,7 @@ export default {
     methods: {
         // 退出提示
         onLogout() {
-            console.log('这个瓜皮想退出！')
+            // console.log('这个瓜皮想退出！')
             // 在组件中需要使用 this.$dialog 来调用弹框组件
             this.$dialog.confirm({
                 title: '退出登录',
@@ -101,12 +101,12 @@ export default {
                 .then(() => {
                     // on confirm
                     // 确认退出：清除登录状态（容器中的 user + 本地存储中的 user）
-                    console.log('这个瓜皮退出了！')
+                    // console.log('这个瓜皮退出了！')
                     this.$store.commit('setUser', null)
                 })
                 .catch(() => {
                     // on cancel
-                    console.log('诶~，我又不想退出了！')
+                    // console.log('诶~，我又不想退出了！')
                 })
         },
         // 获取本人信息

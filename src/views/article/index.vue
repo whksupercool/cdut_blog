@@ -34,10 +34,16 @@
                 <!-- 文章内容 -->
                 <div class="article-content markdown-body" v-html="article.content" ref="article-content"></div>
                 <van-divider>正文结束</van-divider>
+                <!-- 评论列表 -->
+                <CommentList :list="commentList" :source="article.art_id"
+                    @onload-success="totalCommentCount = $event.total_count">
+                </CommentList>
+                <!-- 评论列表 -->
                 <!-- 底部区域 -->
                 <div class="article-bottom">
-                    <van-button class="comment-btn" type="default" round size="small">写评论</van-button>
-                    <van-icon name="comment-o" badge="123" color="#777" />
+                    <van-button class="comment-btn" type="default" round size="small"
+                        @click="isPostShow = true">写评论</van-button>
+                    <van-icon name="comment-o" class="comment-icon" :badge="totalCommentCount" color="#777" />
                     <CollectArticle class="btn-item" v-model="article.is_collected" :articleId="article.art_id">
                     </CollectArticle>
                     <!-- <van-icon color="#777" name="star-o" /> -->
@@ -46,6 +52,11 @@
                     <van-icon name="share" color="#777777"></van-icon>
                 </div>
                 <!-- /底部区域 -->
+                <!-- 发布评论 -->
+                <van-popup v-model="isPostShow" closeable position="bottom" round>
+                    <CommentPost @post-success="onPostSuccess" :target="article.art_id"></CommentPost>
+                </van-popup>
+                <!-- 发布评论 -->
             </div>
             <!-- /加载完成-文章详情 -->
 
@@ -65,7 +76,11 @@
             <!-- /加载失败：其它未知错误（例如网络原因或服务端异常） -->
         </div>
 
-
+        <!-- 评论回复 -->
+        <van-popup v-model="isReplyShow" closeable position="bottom" round style="height: 94%;">
+            <CommentReply v-if="isReplyShow" :comment='currentComment'></CommentReply>
+        </van-popup>
+        <!-- 评论回复 -->
     </div>
 </template>
 
@@ -76,13 +91,26 @@ import { ImagePreview } from 'vant'
 import FollowUser from "@/components/FollowUser"
 import CollectArticle from "@/components/CollectArticle"
 import LikeArticle from "@/components/LikeArticle"
+import CommentList from "@/views/article/components/CommentList.vue"
+import CommentPost from "@/views/article/components/CommentPost.vue"
+import CommentReply from "@/views/article/components/CommentReply.vue"
 
 export default {
     name: 'ArticleIndex',
     components: {
         FollowUser,
         CollectArticle,
-        LikeArticle
+        LikeArticle,
+        CommentList,
+        CommentPost,
+        CommentReply
+    },
+    // 给所有的后代组件提供数据
+    // 注意：不要滥用
+    provide: function () {
+        return {
+            articleId: this.articleId
+        }
     },
     props: {
         articleId: {
@@ -96,6 +124,11 @@ export default {
             loading: true, // 加载中的 loading 状态
             errStatus: 0, // 失败的状态码
             followLoading: false, // 关注的loading状态
+            totalCommentCount: 0, // 文章总评论数
+            isPostShow: false, //是否展出评论弹出层
+            commentList: [], // 评论列表
+            isReplyShow: false,
+            currentComment: {} // 当前点击回复的评论项
         }
     },
     computed: {},
@@ -103,7 +136,9 @@ export default {
     created() {
         this.loadArticle()
     },
-    mounted() { },
+    mounted() {
+        this.$bus.$on('reply-click', this.onReplyClick)
+    },
     methods: {
         async loadArticle() {
             // 展示 loading 加载中
@@ -158,26 +193,19 @@ export default {
                 }
             })
         },
-        // async onFollow() {
-        //     this.followLoading = true
-        //     try {
-        //         if (this.article.is_followed) {
-        //             // 已关注，取消关注
-        //             await deleteFollow(this.article.aut_id)
-        //         } else {
-        //             // 没有关注，添加关注
-        //             await addFollow(this.article.aut_id)
-        //         }
-        //         this.article.is_followed = !this.article.is_followed
-        //     } catch (error) {
-        //         let message = '操作失败，请稍后重试！'
-        //         if (error.response && error.response.status === 400) {
-        //             message = '您不能关注您自己！'
-        //         }
-        //         this.$toast.fail(message)
-        //     }
-        //     this.followLoading = false
-        // },
+        onPostSuccess(data) {
+            // 关闭弹出层
+            this.isPostShow = false
+            // 将发布内容显示到列表顶部
+            this.commentList.unshift(data.new_obj)
+            this.totalCommentCount++
+        },
+        onReplyClick(comment) {
+            this.currentComment = comment
+            // console.log(comment)
+            // 显示评论回复弹出层
+            this.isReplyShow = true
+        },
     }
 }
 </script>
